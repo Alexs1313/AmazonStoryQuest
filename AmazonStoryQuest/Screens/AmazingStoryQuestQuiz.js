@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import AmazingGiggleLandLayout from '../AmazonStoryQuestComponents/AmazingGiggleLandLayout';
+import AmazingGiggleLandLayout from '../StoryComponents/AmazingGiggleLandLayout';
 
 import React, { useState, useEffect } from 'react';
 import {
@@ -12,8 +12,8 @@ import {
   Dimensions,
   Vibration,
 } from 'react-native';
-import { giggleLandQuizData } from '../AmazonStoryQuestConsts/giggleLandQuizData';
-import { useStore } from '../AmazonStoryQuestStore/amazingGiggleQuestContext';
+import { giggleLandQuizData } from '../StoryQuestConsts/giggleLandQuizData';
+import { useStore } from '../[AmazonQuestStore]/amazingGiggleQuestContext';
 
 const { height } = Dimensions.get('window');
 

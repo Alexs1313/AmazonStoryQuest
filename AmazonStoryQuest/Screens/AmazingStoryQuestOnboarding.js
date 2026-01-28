@@ -1,4 +1,4 @@
-import AmazingGiggleLandLayout from '../AmazonStoryQuestComponents/AmazingGiggleLandLayout';
+import AmazingGiggleLandLayout from '../StoryComponents/AmazingGiggleLandLayout';
 import {
   Image,
   ImageBackground,
@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import AmazingStoryQuestButton from '../AmazonStoryQuestComponents/AmazingStoryQuestButton';
+import AmazingStoryQuestButton from '../StoryComponents/AmazingStoryQuestButton';
 
 const AmazingStoryQuestOnboarding = () => {
   const [giggleLandCurrentStep, setGiggleLandCurrentStep] = useState(0);
@@ -25,7 +25,7 @@ const AmazingStoryQuestOnboarding = () => {
           <Text style={styles.giggleLandTitle}>
             {giggleLandCurrentStep === 0 &&
               Platform.OS === 'ios' &&
-              'Welcome to Amazon Story Quest!'}
+              'Welcome to Amazing Story Quest!'}
             {giggleLandCurrentStep === 0 &&
               Platform.OS === 'android' &&
               'Welcome to Toto Story Quest!'}
@@ -90,18 +90,20 @@ const styles = StyleSheet.create({
     paddingBottom: 35,
   },
   giggleLandTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
     marginBottom: 12,
+    paddingHorizontal: 20,
   },
   giggleLandSubtitle: {
     fontSize: 16,
     color: '#fff',
     textAlign: 'center',
     fontStyle: 'italic',
-    fontWeight: '400',
+    fontFamily: 'Inika-Bold',
+    paddingHorizontal: 20,
   },
   giggleLandBoardCont: {
     width: 371,

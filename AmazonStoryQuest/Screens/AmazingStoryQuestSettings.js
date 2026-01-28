@@ -9,8 +9,8 @@ import {
   Platform,
 } from 'react-native';
 import React, { useState } from 'react';
-import AmazingGiggleLandLayout from '../AmazonStoryQuestComponents/AmazingGiggleLandLayout';
-import { useStore } from '../AmazonStoryQuestStore/amazingGiggleQuestContext';
+import AmazingGiggleLandLayout from '../StoryComponents/AmazingGiggleLandLayout';
+import { useStore } from '../[AmazonQuestStore]/amazingGiggleQuestContext';
 
 export default function AmazingStoryQuestSettings() {
   const [giggleLandDialog, setGiggleLandDialog] = useState(null);

@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import AmazingStoryQuestLoader from '../AmazonStoryQuestComponents/AmazingGiggleLandLoader';
-import AmazingStoryQuestOnboarding from '../AmazonStoryQuestScreens/AmazingStoryQuestOnboarding';
+import AmazingStoryQuestLoader from '../StoryComponents/AmazingGiggleLandLoader';
+import AmazingStoryQuestOnboarding from '../Screens/AmazingStoryQuestOnboarding';
 import AmazingStoryQuestTab from './AmazingStoryQuestTab';
 
 const Stack = createStackNavigator();

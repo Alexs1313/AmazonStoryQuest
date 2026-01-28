@@ -19,6 +19,7 @@
 		D1A578B52EF86764000B89C6 /* crowd-laughing-sound-effect-no-copyright-390899.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D1A578B42EF86764000B89C6 /* crowd-laughing-sound-effect-no-copyright-390899.mp3 */; };
 		D1A578B72EF8676C000B89C6 /* crowd-laughing-07-120585.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D1A578B62EF8676C000B89C6 /* crowd-laughing-07-120585.mp3 */; };
 		D1A578B92EF86771000B89C6 /* crowd-shocked-reaction-352766.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D1A578B82EF86771000B89C6 /* crowd-shocked-reaction-352766.mp3 */; };
+		D1A578BB2EF9735D000B89C6 /* Inika-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D1A578BA2EF9735D000B89C6 /* Inika-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		D1A578B42EF86764000B89C6 /* crowd-laughing-sound-effect-no-copyright-390899.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "crowd-laughing-sound-effect-no-copyright-390899.mp3"; sourceTree = "<group>"; };
 		D1A578B62EF8676C000B89C6 /* crowd-laughing-07-120585.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "crowd-laughing-07-120585.mp3"; sourceTree = "<group>"; };
 		D1A578B82EF86771000B89C6 /* crowd-shocked-reaction-352766.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "crowd-shocked-reaction-352766.mp3"; sourceTree = "<group>"; };
+		D1A578BA2EF9735D000B89C6 /* Inika-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inika-Bold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -99,6 +101,8 @@
 				D1A578B42EF86764000B89C6 /* crowd-laughing-sound-effect-no-copyright-390899.mp3 */,
 				D1A578B62EF8676C000B89C6 /* crowd-laughing-07-120585.mp3 */,
 				D1A578B82EF86771000B89C6 /* crowd-shocked-reaction-352766.mp3 */,
+				90583EE6444140F89DB7ABA8 /* Resources */,
+				D1A578BA2EF9735D000B89C6 /* Inika-Bold.ttf */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -111,6 +115,13 @@
 				13B07F961A680F5B00A75B9A /* AmazonStoryQuest.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		90583EE6444140F89DB7ABA8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
@@ -186,6 +197,7 @@
 				D1A578B32EF8675D000B89C6 /* fireworks-08-419026.mp3 in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				D1A578B72EF8676C000B89C6 /* crowd-laughing-07-120585.mp3 in Resources */,
+				D1A578BB2EF9735D000B89C6 /* Inika-Bold.ttf in Resources */,
 				BB1CB515C9B31D7E5D8C3FB4 /* PrivacyInfo.xcprivacy in Resources */,
 				D1A578B52EF86764000B89C6 /* crowd-laughing-sound-effect-no-copyright-390899.mp3 in Resources */,
 				D1A578B92EF86771000B89C6 /* crowd-shocked-reaction-352766.mp3 in Resources */,

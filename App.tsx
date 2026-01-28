@@ -1,6 +1,6 @@
-import { MusicProvider } from './AmazonStoryQuest/AmazonStoryQuestStore/amazingGiggleQuestContext';
+import { MusicProvider } from './AmazonStoryQuest/[AmazonQuestStore]/amazingGiggleQuestContext';
 import { NavigationContainer } from '@react-navigation/native';
-import AmazingStoryQuestStack from './AmazonStoryQuest/AmazonStoryQuestRoutes/AmazingStoryQuestStack';
+import AmazingStoryQuestStack from './AmazonStoryQuest/[QuestRoutes]/AmazingStoryQuestStack';
 
 const App = () => {
   return (

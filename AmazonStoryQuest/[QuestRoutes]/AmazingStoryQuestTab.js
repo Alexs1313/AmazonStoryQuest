@@ -5,10 +5,10 @@ import {
   StyleSheet,
   useWindowDimensions,
 } from 'react-native';
-import AmazingStoryQuestStories from '../AmazonStoryQuestScreens/AmazingStoryQuestStories';
-import AmazingStoryQuestMasks from '../AmazonStoryQuestScreens/AmazingStoryQuestMasks';
-import AmazingStoryQuestQuiz from '../AmazonStoryQuestScreens/AmazingStoryQuestQuiz';
-import AmazingStoryQuestSettings from '../AmazonStoryQuestScreens/AmazingStoryQuestSettings';
+import AmazingStoryQuestStories from '../Screens/AmazingStoryQuestStories';
+import AmazingStoryQuestMasks from '../Screens/AmazingStoryQuestMasks';
+import AmazingStoryQuestQuiz from '../Screens/AmazingStoryQuestQuiz';
+import AmazingStoryQuestSettings from '../Screens/AmazingStoryQuestSettings';
 
 const Tab = createBottomTabNavigator();
 

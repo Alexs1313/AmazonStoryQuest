@@ -2,8 +2,8 @@ import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback } from 'react';
-import AmazingGiggleLandLayout from '../AmazonStoryQuestComponents/AmazingGiggleLandLayout';
-import { useStore } from '../AmazonStoryQuestStore/amazingGiggleQuestContext';
+import AmazingGiggleLandLayout from '../StoryComponents/AmazingGiggleLandLayout';
+import { useStore } from '../[AmazonQuestStore]/amazingGiggleQuestContext';
 
 const { height } = Dimensions.get('window');
 
