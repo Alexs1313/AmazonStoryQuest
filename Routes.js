@@ -14,7 +14,7 @@ const Routes = () => {
       />
       <Stack.Screen
         name="AmazingStoryQuestOnboarding"
-        component={AmazingStoryQuestOnboarding}
+        component={AmazingStoryQuestOnboardin}
       />
       <Stack.Screen
         name="AmazingStoryQuestTab"
