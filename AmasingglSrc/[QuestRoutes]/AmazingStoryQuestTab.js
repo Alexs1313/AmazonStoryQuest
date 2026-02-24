@@ -1,7 +1,10 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React, { useRef } from 'react';
 import {
+  Animated,
   Image,
   ImageBackground,
+  Pressable,
   StyleSheet,
   useWindowDimensions,
 } from 'react-native';
@@ -11,6 +14,49 @@ import AmazingStoryQuestQuiz from '../Screens/AmazingStoryQuestQuiz';
 import AmazingStoryQuestSettings from '../Screens/AmazingStoryQuestSettings';
 
 const Tab = createBottomTabNavigator();
+
+const AnimatedTabBarButton = ({
+  children,
+  onPressIn,
+  onPressOut,
+  style,
+  ...props
+}) => {
+  const giggleLandScale = useRef(new Animated.Value(1)).current;
+
+  const giggleLandHandlePressIn = event => {
+    Animated.spring(giggleLandScale, {
+      toValue: 0.92,
+      useNativeDriver: true,
+      speed: 35,
+      bounciness: 4,
+    }).start();
+    onPressIn?.(event);
+  };
+
+  const giggleLandHandlePressOut = event => {
+    Animated.spring(giggleLandScale, {
+      toValue: 1,
+      useNativeDriver: true,
+      speed: 35,
+      bounciness: 4,
+    }).start();
+    onPressOut?.(event);
+  };
+
+  return (
+    <Pressable
+      {...props}
+      style={style}
+      onPressIn={giggleLandHandlePressIn}
+      onPressOut={giggleLandHandlePressOut}
+    >
+      <Animated.View style={{ transform: [{ scale: giggleLandScale }] }}>
+        {children}
+      </Animated.View>
+    </Pressable>
+  );
+};
 
 const AmazingStoryQuestTab = () => {
   const { width, height } = useWindowDimensions();
@@ -32,6 +78,7 @@ const AmazingStoryQuestTab = () => {
             style={{ height: 71, width: 243, alignSelf: 'center' }}
           ></ImageBackground>
         ),
+        tabBarButton: props => <AnimatedTabBarButton {...props} />,
       }}
     >
       <Tab.Screen

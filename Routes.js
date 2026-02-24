@@ -1,11 +1,11 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import AmazingStoryQuestLoader from '../StoryComponents/AmazingGiggleLandLoader';
-import AmazingStoryQuestOnboarding from '../Screens/AmazingStoryQuestOnboarding';
-import AmazingStoryQuestTab from './AmazingStoryQuestTab';
+import AmazingStoryQuestLoader from './AmasingglSrc/StoryComponents/AmazingGiggleLandLoader';
+import AmazingStoryQuestOnboarding from './AmasingglSrc/Screens/AmazingStoryQuestOnboarding';
+import AmazingStoryQuestTab from './AmasingglSrc/[QuestRoutes]/AmazingStoryQuestTab';
 
 const Stack = createStackNavigator();
 
-const AmazingStoryQuestStack = () => {
+const Routes = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
@@ -24,4 +24,4 @@ const AmazingStoryQuestStack = () => {
   );
 };
 
-export default AmazingStoryQuestStack;
+export default Routes;

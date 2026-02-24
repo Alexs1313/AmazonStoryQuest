@@ -321,7 +321,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.amazon.story.quest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.AmazinGiggleQuest;
 				PRODUCT_NAME = AmazonStoryQuest;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -348,7 +348,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.amazon.story.quest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.AmazinGiggleQuest;
 				PRODUCT_NAME = AmazonStoryQuest;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

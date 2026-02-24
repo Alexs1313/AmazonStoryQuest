@@ -1,12 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AmazingGiggleLandLayout from '../StoryComponents/AmazingGiggleLandLayout';
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
+  Animated,
   View,
   Text,
   Image,
-  TouchableOpacity,
+  Pressable,
   ImageBackground,
   Share,
   StyleSheet,
@@ -14,14 +15,50 @@ import {
   ScrollView,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { giggleLandStoriesData } from '../StoryQuestConsts/giggleLandQuizData';
-import { useStore } from '../[AmazonQuestStore]/amazingGiggleQuestContext';
+import { giggleLandStoriesData } from '../../giggleLandQuizData';
+import { useStore } from '../[QuestStore]/amazingGiggleQuestContext';
 
 const { height } = Dimensions.get('window');
+
+const AnimatedPressable = ({ onPress, style, children }) => {
+  const giggleLandScale = useRef(new Animated.Value(1)).current;
+
+  const giggleLandHandlePressIn = () => {
+    Animated.spring(giggleLandScale, {
+      toValue: 0.94,
+      useNativeDriver: true,
+      speed: 35,
+      bounciness: 4,
+    }).start();
+  };
+
+  const giggleLandHandlePressOut = () => {
+    Animated.spring(giggleLandScale, {
+      toValue: 1,
+      useNativeDriver: true,
+      speed: 35,
+      bounciness: 4,
+    }).start();
+  };
+
+  return (
+    <Pressable
+      onPress={onPress}
+      onPressIn={giggleLandHandlePressIn}
+      onPressOut={giggleLandHandlePressOut}
+      style={style}
+    >
+      <Animated.View style={{ transform: [{ scale: giggleLandScale }] }}>
+        {children}
+      </Animated.View>
+    </Pressable>
+  );
+};
 
 const AmazingStoryQuestStories = () => {
   const [giggleLandTab, setGiggleLandTab] = useState('all');
   const [giggleLandOpened, setGiggleLandOpened] = useState(null);
+  const giggleLandCardAnims = useRef({});
   const {
     setIsOnGiggleLandVibration,
     setIsOnGiggleLandSound,
@@ -138,6 +175,35 @@ const AmazingStoryQuestStories = () => {
       : giggleLandStoriesData.filter(story =>
           giggleLandFavorites.includes(story.id),
         );
+  const giggleLandVisibleStoryIds = giggleLandVisibleStories
+    .map(story => story.id)
+    .join('-');
+
+  const giggleLandGetCardAnim = storyId => {
+    if (!giggleLandCardAnims.current[storyId]) {
+      giggleLandCardAnims.current[storyId] = new Animated.Value(0);
+    }
+    return giggleLandCardAnims.current[storyId];
+  };
+
+  useEffect(() => {
+    const giggleLandCardsToAnimate = giggleLandVisibleStories.map(story =>
+      giggleLandGetCardAnim(story.id),
+    );
+
+    giggleLandCardsToAnimate.forEach(anim => anim.setValue(0));
+
+    Animated.stagger(
+      90,
+      giggleLandCardsToAnimate.map(anim =>
+        Animated.timing(anim, {
+          toValue: 1,
+          duration: 320,
+          useNativeDriver: true,
+        }),
+      ),
+    ).start();
+  }, [giggleLandVisibleStoryIds]);
 
   if (giggleLandOpened) {
     const giggleLandStory = giggleLandStoriesData.find(
@@ -156,17 +222,27 @@ const AmazingStoryQuestStories = () => {
           <View style={styles.giggleLandContainer}>
             <Text
               style={{
-                fontSize: 16,
+                fontSize: 20,
                 fontWeight: '700',
                 textAlign: 'center',
-                marginTop: 40,
-                color: '#fff',
-                paddingHorizontal: 50,
+
+                color: '#000',
+                width: '50%',
+                alignSelf: 'center',
                 marginBottom: 20,
               }}
             >
               {giggleLandStory.title}
             </Text>
+
+            <AnimatedPressable
+              onPress={() => setGiggleLandOpened(null)}
+              style={styles.giggleLandBackButton}
+            >
+              <Image
+                source={require('../../assets/amazonStoryQuestImages/back.png')}
+              />
+            </AnimatedPressable>
 
             <Image
               source={giggleLandStory.image}
@@ -178,7 +254,7 @@ const AmazingStoryQuestStories = () => {
             </Text>
 
             <View style={styles.giggleLandStarsDetWrap}>
-              <TouchableOpacity
+              <AnimatedPressable
                 onPress={() => giggleLandToggleFavorite(giggleLandStory.id)}
                 style={{ alignSelf: 'center' }}
               >
@@ -189,11 +265,11 @@ const AmazingStoryQuestStories = () => {
                       : require('../../assets/amazonStoryQuestImages/starbigOff.png')
                   }
                 />
-              </TouchableOpacity>
+              </AnimatedPressable>
 
               <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                 {[1, 2, 3].map(n => (
-                  <TouchableOpacity
+                  <AnimatedPressable
                     key={n}
                     onPress={() => giggleLandSetRating(giggleLandStory.id, n)}
                   >
@@ -216,12 +292,11 @@ const AmazingStoryQuestStories = () => {
                         />
                       )}
                     </Text>
-                  </TouchableOpacity>
+                  </AnimatedPressable>
                 ))}
               </View>
 
-              <TouchableOpacity
-                activeOpacity={0.7}
+              <AnimatedPressable
                 onPress={() =>
                   giggleLandShareStory(
                     giggleLandStory.title,
@@ -232,7 +307,7 @@ const AmazingStoryQuestStories = () => {
                 <Image
                   source={require('../../assets/amazonStoryQuestImages/gigglelandshr.png')}
                 />
-              </TouchableOpacity>
+              </AnimatedPressable>
             </View>
           </View>
         </ScrollView>
@@ -251,16 +326,13 @@ const AmazingStoryQuestStories = () => {
             gap: 25,
           }}
         >
-          <TouchableOpacity
-            onPress={() => setGiggleLandTab('all')}
-            activeOpacity={0.7}
-          >
+          <AnimatedPressable onPress={() => setGiggleLandTab('all')}>
             <ImageBackground
               source={require('../../assets/amazonStoryQuestImages/tabOn.png')}
               style={[
                 styles.giggleLandTabContainer,
                 giggleLandTab === 'favorite'
-                  ? { opacity: 0.6 }
+                  ? { opacity: 0.8 }
                   : { opacity: 1 },
               ]}
             >
@@ -270,19 +342,16 @@ const AmazingStoryQuestStories = () => {
                 All
               </Text>
             </ImageBackground>
-          </TouchableOpacity>
+          </AnimatedPressable>
 
-          <TouchableOpacity
-            onPress={() => setGiggleLandTab('favorite')}
-            activeOpacity={0.7}
-          >
+          <AnimatedPressable onPress={() => setGiggleLandTab('favorite')}>
             <ImageBackground
               source={require('../../assets/amazonStoryQuestImages/tabOn.png')}
               style={[
                 styles.giggleLandTabContainer,
                 giggleLandTab === 'favorite'
                   ? { opacity: 1 }
-                  : { opacity: 0.6 },
+                  : { opacity: 0.8 },
               ]}
             >
               <Text
@@ -291,7 +360,7 @@ const AmazingStoryQuestStories = () => {
                 Favorite
               </Text>
             </ImageBackground>
-          </TouchableOpacity>
+          </AnimatedPressable>
         </View>
         {giggleLandTab === 'favorite' &&
           giggleLandVisibleStories.length === 0 && (
@@ -328,7 +397,20 @@ const AmazingStoryQuestStories = () => {
             </View>
           )}
         {giggleLandVisibleStories.map(story => (
-          <View key={story.id}>
+          <Animated.View
+            key={story.id}
+            style={{
+              opacity: giggleLandGetCardAnim(story.id),
+              transform: [
+                {
+                  translateY: giggleLandGetCardAnim(story.id).interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [18, 0],
+                  }),
+                },
+              ],
+            }}
+          >
             <ImageBackground
               source={require('../../assets/amazonStoryQuestImages/storycardbg.png')}
               style={styles.giggleLandCardBoard}
@@ -384,9 +466,8 @@ const AmazingStoryQuestStories = () => {
                       style={{ tintColor: '#f5ae08d6', width: 26, height: 24 }}
                     />
 
-                    <TouchableOpacity
+                    <AnimatedPressable
                       onPress={() => setGiggleLandOpened(story.id)}
-                      activeOpacity={0.7}
                     >
                       <Image
                         source={require('../../assets/amazonStoryQuestImages/playbtn.png')}
@@ -396,10 +477,9 @@ const AmazingStoryQuestStories = () => {
                           height: 32,
                         }}
                       />
-                    </TouchableOpacity>
+                    </AnimatedPressable>
 
-                    <TouchableOpacity
-                      activeOpacity={0.7}
+                    <AnimatedPressable
                       onPress={() =>
                         giggleLandShareStory(story.title, story.text)
                       }
@@ -412,12 +492,12 @@ const AmazingStoryQuestStories = () => {
                           height: 20,
                         }}
                       />
-                    </TouchableOpacity>
+                    </AnimatedPressable>
                   </View>
                 </View>
               </View>
             </ImageBackground>
-          </View>
+          </Animated.View>
         ))}
       </View>
     </AmazingGiggleLandLayout>
@@ -435,6 +515,24 @@ const styles = StyleSheet.create({
     height: 56,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  giggleLandBackButton: {
+    position: 'absolute',
+    left: 20,
+    top: height * 0.06,
+    zIndex: 2,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255,255,255,0.75)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  giggleLandBackButtonText: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#1B1B1B',
+    marginTop: -3,
   },
   giggleLandStoryBoard: {
     width: 510,
@@ -477,10 +575,10 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   giggleLandStorySubitle: {
-    fontSize: 12,
+    fontSize: 13,
     lineHeight: 16,
     fontWeight: '400',
-    color: '#fff',
+    color: '#000',
     textAlign: 'center',
     paddingHorizontal: 30,
   },
@@ -490,6 +588,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 10,
     marginBottom: 20,
+    borderRadius: 12,
   },
   giggleLandEmptyBoard: {
     width: 371,

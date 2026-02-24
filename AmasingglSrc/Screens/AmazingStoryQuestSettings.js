@@ -1,16 +1,52 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
+  Animated,
   View,
   Text,
-  TouchableOpacity,
+  Pressable,
   Image,
   ImageBackground,
   StyleSheet,
   Platform,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import AmazingGiggleLandLayout from '../StoryComponents/AmazingGiggleLandLayout';
-import { useStore } from '../[AmazonQuestStore]/amazingGiggleQuestContext';
+import { useStore } from '../[QuestStore]/amazingGiggleQuestContext';
+
+const AnimatedPressable = ({ onPress, style, children }) => {
+  const giggleLandScale = useRef(new Animated.Value(1)).current;
+
+  const giggleLandHandlePressIn = () => {
+    Animated.spring(giggleLandScale, {
+      toValue: 0.94,
+      useNativeDriver: true,
+      speed: 35,
+      bounciness: 4,
+    }).start();
+  };
+
+  const giggleLandHandlePressOut = () => {
+    Animated.spring(giggleLandScale, {
+      toValue: 1,
+      useNativeDriver: true,
+      speed: 35,
+      bounciness: 4,
+    }).start();
+  };
+
+  return (
+    <Pressable
+      onPress={onPress}
+      onPressIn={giggleLandHandlePressIn}
+      onPressOut={giggleLandHandlePressOut}
+      style={style}
+    >
+      <Animated.View style={{ transform: [{ scale: giggleLandScale }] }}>
+        {children}
+      </Animated.View>
+    </Pressable>
+  );
+};
 
 export default function AmazingStoryQuestSettings() {
   const [giggleLandDialog, setGiggleLandDialog] = useState(null);
@@ -73,9 +109,8 @@ export default function AmazingStoryQuestSettings() {
           {Platform.OS === 'ios' && (
             <View style={styles.giggleLandRow}>
               <Text style={styles.giggleLandItemText}>Sounds</Text>
-              <TouchableOpacity
+              <AnimatedPressable
                 onPress={() => giggleLandToggleSound(!isOnGiggleLandSound)}
-                activeOpacity={0.8}
               >
                 <Image
                   source={
@@ -84,17 +119,16 @@ export default function AmazingStoryQuestSettings() {
                       : require('../../assets/amazonStoryQuestImages/gigglelandsettoff.png')
                   }
                 />
-              </TouchableOpacity>
+              </AnimatedPressable>
             </View>
           )}
 
           <View style={styles.giggleLandRow}>
             <Text style={styles.giggleLandItemText}>Vibration</Text>
-            <TouchableOpacity
+            <AnimatedPressable
               onPress={() =>
                 giggleLandToggleVibration(!isOnGiggleLandVibration)
               }
-              activeOpacity={0.8}
             >
               <Image
                 source={
@@ -103,31 +137,39 @@ export default function AmazingStoryQuestSettings() {
                     : require('../../assets/amazonStoryQuestImages/gigglelandsettoff.png')
                 }
               />
-            </TouchableOpacity>
+            </AnimatedPressable>
           </View>
 
-          <TouchableOpacity
-            onPress={() => setGiggleLandDialog('reset')}
-            style={styles.giggleLandRow}
-            activeOpacity={0.7}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 22,
+            }}
           >
             <Text style={styles.giggleLandItemText}>Reset Progress</Text>
-            <Image
-              source={require('../../assets/amazonStoryQuestImages/gigglelandreset.png')}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => setGiggleLandDialog('fav')}
-            style={styles.giggleLandRow}
-            activeOpacity={0.7}
+            <AnimatedPressable onPress={() => setGiggleLandDialog('reset')}>
+              <Image
+                source={require('../../assets/amazonStoryQuestImages/gigglelandreset.png')}
+              />
+            </AnimatedPressable>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
           >
             <Text style={styles.giggleLandItemText}>Clear Favorite</Text>
-            <Image
-              source={require('../../assets/amazonStoryQuestImages/gigglelandclear.png')}
-              style={{ tintColor: '#fff' }}
-            />
-          </TouchableOpacity>
+            <AnimatedPressable onPress={() => setGiggleLandDialog('fav')}>
+              <Image
+                source={require('../../assets/amazonStoryQuestImages/gigglelandclear.png')}
+                style={{ tintColor: '#fff' }}
+              />
+            </AnimatedPressable>
+          </View>
         </ImageBackground>
 
         {giggleLandDialog && (
@@ -144,13 +186,13 @@ export default function AmazingStoryQuestSettings() {
             </ImageBackground>
 
             <View style={styles.giggleLandDialogBtns}>
-              <TouchableOpacity onPress={() => setGiggleLandDialog(null)}>
+              <AnimatedPressable onPress={() => setGiggleLandDialog(null)}>
                 <Image
                   source={require('../../assets/amazonStoryQuestImages/storydetailsclose.png')}
                 />
-              </TouchableOpacity>
+              </AnimatedPressable>
 
-              <TouchableOpacity
+              <AnimatedPressable
                 onPress={
                   giggleLandDialog === 'fav'
                     ? giggleLandClearFavorites
@@ -160,7 +202,7 @@ export default function AmazingStoryQuestSettings() {
                 <Image
                   source={require('../../assets/amazonStoryQuestImages/gigglelandyes.png')}
                 />
-              </TouchableOpacity>
+              </AnimatedPressable>
             </View>
           </View>
         )}

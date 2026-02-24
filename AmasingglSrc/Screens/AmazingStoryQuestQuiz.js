@@ -1,21 +1,64 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AmazingGiggleLandLayout from '../StoryComponents/AmazingGiggleLandLayout';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
+  Animated,
   View,
   Text,
   TouchableOpacity,
+  Pressable,
   Image,
   ImageBackground,
   StyleSheet,
   Dimensions,
   Vibration,
 } from 'react-native';
-import { giggleLandQuizData } from '../StoryQuestConsts/giggleLandQuizData';
-import { useStore } from '../[AmazonQuestStore]/amazingGiggleQuestContext';
+import { giggleLandQuizData } from '../../giggleLandQuizData';
+import { useStore } from '../[QuestStore]/amazingGiggleQuestContext';
 
 const { height } = Dimensions.get('window');
+
+const GiggleLandAnimatedPressable = ({
+  onPress,
+  disabled = false,
+  children,
+  style,
+}) => {
+  const giggleLandScale = useRef(new Animated.Value(1)).current;
+
+  const giggleLandPressIn = () => {
+    Animated.spring(giggleLandScale, {
+      toValue: 0.95,
+      useNativeDriver: true,
+      speed: 35,
+      bounciness: 4,
+    }).start();
+  };
+
+  const giggleLandPressOut = () => {
+    Animated.spring(giggleLandScale, {
+      toValue: 1,
+      useNativeDriver: true,
+      speed: 35,
+      bounciness: 4,
+    }).start();
+  };
+
+  return (
+    <Pressable
+      disabled={disabled}
+      onPress={onPress}
+      onPressIn={giggleLandPressIn}
+      onPressOut={giggleLandPressOut}
+      style={style}
+    >
+      <Animated.View style={{ transform: [{ scale: giggleLandScale }] }}>
+        {children}
+      </Animated.View>
+    </Pressable>
+  );
+};
 
 export default function AmazingStoryQuestQuiz() {
   const [giggleLandScreen, setGiggleLandScreen] = useState('intro');
@@ -230,13 +273,12 @@ export default function AmazingStoryQuestQuiz() {
               }
 
               return (
-                <TouchableOpacity
+                <GiggleLandAnimatedPressable
                   key={giggleLandOptIdx}
                   disabled={giggleLandConfirmed}
                   onPress={() => {
                     setGiggleLandSelected(giggleLandOptIdx);
                   }}
-                  activeOpacity={0.7}
                 >
                   <ImageBackground
                     source={giggleLandBg}
@@ -249,7 +291,7 @@ export default function AmazingStoryQuestQuiz() {
                       {giggleLandOption.text}
                     </Text>
                   </ImageBackground>
-                </TouchableOpacity>
+                </GiggleLandAnimatedPressable>
               );
             },
           )}

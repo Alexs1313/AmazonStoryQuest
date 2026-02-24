@@ -90,6 +90,7 @@ const AmazingStoryQuestLoader = () => {
         ) : (
           <Image
             source={require('../../assets/amazonStoryQuestImages/gigglelandldr.png')}
+            style={{ width: 320, height: 320, borderRadius: 52 }}
           />
         )}
       </View>
